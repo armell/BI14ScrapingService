@@ -12,18 +12,21 @@ namespace BI2014.Service.Controllers
     //[Authorize]
     public class CourseController : ApiController
     {
+        Parser webparser = new Parser();
         // GET api/values
-        public IEnumerable<Course> Get()
+        public HttpResponseMessage Get()
         {
-            Parser webparser = new Parser();
 
-            return webparser.GetCourses(Parser.Provider.UUCS);
+            return Get(2013);
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            return "value";
+            if (id < 2011)
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Courses registered before 2011 are not available");
+
+            return Request.CreateResponse(webparser.GetCourses(Parser.Provider.UUCS, id));
         }
 
         // POST api/values

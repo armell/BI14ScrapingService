@@ -10,6 +10,8 @@ namespace BI2014.Scrapping.Provider
     interface IProvider
     {
         string URI { get; set; }
+        int Year { get; set; }
         ICollection<Course> Courses { get; set; }
+        ICollection<Member> Members { get; set; }
     }
 }

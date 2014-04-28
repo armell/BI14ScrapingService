@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BI2014.Scrapping.Engine;
+using BI2014.Scrapping.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,13 +9,15 @@ using System.Web.Http;
 
 namespace BI2014.Service.Controllers
 {
-    [Authorize]
-    public class ValuesController : ApiController
+    //[Authorize]
+    public class CourseController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public IEnumerable<Course> Get()
         {
-            return new string[] { "value1", "value2" };
+            Parser webparser = new Parser();
+
+            return webparser.GetCourses(Parser.Provider.UUCS);
         }
 
         // GET api/values/5

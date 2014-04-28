@@ -45,6 +45,9 @@
     <Compile Include="Engine\Parser.cs" />
     <Compile Include="Engine\Swagger.cs" />
     <Compile Include="Entities\Course.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\Publication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\IProvider.cs" />
     <Compile Include="Provider\UUCSPRovider.cs" />

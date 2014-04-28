@@ -14,10 +14,11 @@ namespace BI2014.ConsoleTest
         {
             Parser webparser = new Parser();
 
-            var courses = webparser.GetCourses(Parser.Provider.UUCS);
+            //var courses = webparser.GetCourses(Parser.Provider.UUCS);
 
-            Console.WriteLine(JsonConvert.SerializeObject(courses.Select(p => new { Code = p.Code, Name = p.Name })));
+            //Console.WriteLine(JsonConvert.SerializeObject(courses.Select(p => new { Code = p.Code, Name = p.Name, URI = p.URI })));
 
+            Console.WriteLine(JsonConvert.SerializeObject(webparser.GetMembers(Parser.Provider.UUCS)));
             System.Console.ReadLine();
         }
     }

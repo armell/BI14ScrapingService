@@ -16,7 +16,7 @@ namespace BI2014.ConsoleTest
 
             var courses = webparser.GetCourses(Parser.Provider.UUCS);
 
-            Console.WriteLine(JsonConvert.SerializeObject(courses.Select(p => p.Code)));
+            Console.WriteLine(JsonConvert.SerializeObject(courses.Select(p => new { Code = p.Code, Name = p.Name })));
 
             System.Console.ReadLine();
         }

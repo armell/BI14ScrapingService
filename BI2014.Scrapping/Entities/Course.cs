@@ -12,9 +12,10 @@ namespace BI2014.Scrapping.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public string Level { get; set; }
-        public string year { get; set; }
+        public string Year { get; set; }
         public string Credits { get; set; }
         public string Students { get; set; }
+        public string URI { get; set; }
 
     }
 }

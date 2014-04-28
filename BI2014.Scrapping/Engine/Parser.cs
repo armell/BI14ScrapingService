@@ -12,18 +12,26 @@ namespace BI2014.Scrapping.Engine
         public enum Provider {UUCS};
         private Swagger _swagger = new Swagger();
 
-        public ICollection<Entities.Course> GetCourses(Provider provider)
+        public ICollection<Entities.Course> GetCourses(Provider provider, int year = 2013)
         {
-            IProvider sprovider = null;
+            IProvider sourceProvider = null;
 
             switch(provider)
             {
                 case Provider.UUCS:
-                    sprovider = new UUCSPRovider();
-                    sprovider.URI = @"http://www.cs.uu.nl/education/rooster.php?stijl=2&stjaar=a";
+                    sourceProvider = new UUCSPRovider();
+                    sourceProvider.URI = @"http://www.cs.uu.nl/education/rooster.php";
+                    sourceProvider.Year = year;
                     break;
             }
-            return sprovider.Courses;
+            return sourceProvider.Courses;
+        }
+
+        public ICollection<Entities.Member> GetMembers(Provider provider)
+        {
+            IProvider sourceProvider = new UUCSPRovider();
+            sourceProvider.URI = @"http://www.cs.uu.nl/staff/cur";
+            return sourceProvider.Members;
         }
     }
 }

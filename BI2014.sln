@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configura
 		PublishScripts\Configurations\BI2014Service-WAWS-dev.json = PublishScripts\Configurations\BI2014Service-WAWS-dev.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BI2014.Scraping", "BI2014.Scrapping\BI2014.Scraping.csproj", "{483C0BBD-9C71-42A4-8E3E-2B8AC3A6F39E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BI2014.Console", "BI2014.Console\BI2014.Console.csproj", "{85951C57-0461-4298-99B9-0073492DC821}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{5D73D745-3B1A-475B-8194-FC1C9161840B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D73D745-3B1A-475B-8194-FC1C9161840B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D73D745-3B1A-475B-8194-FC1C9161840B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{483C0BBD-9C71-42A4-8E3E-2B8AC3A6F39E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{483C0BBD-9C71-42A4-8E3E-2B8AC3A6F39E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{483C0BBD-9C71-42A4-8E3E-2B8AC3A6F39E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{483C0BBD-9C71-42A4-8E3E-2B8AC3A6F39E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85951C57-0461-4298-99B9-0073492DC821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85951C57-0461-4298-99B9-0073492DC821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85951C57-0461-4298-99B9-0073492DC821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85951C57-0461-4298-99B9-0073492DC821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

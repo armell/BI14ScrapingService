@@ -19,6 +19,8 @@ namespace BI2014.Scrapping.Entities
         public string Year { get; set; }
         public string Credits { get; set; }
         public string Students { get; set; }
+
+        public string[] Target { get; set; }
         public string URI { get; set; }
 
     }

@@ -13,20 +13,28 @@ namespace BI2014.Service.Controllers
     public class CourseController : ApiController
     {
         Parser webparser = new Parser();
-        // GET api/values
-        public HttpResponseMessage Get()
-        {
 
-            return Get(2013);
-        }
-
-        // GET api/values/5
-        public HttpResponseMessage Get(int id)
+        [ActionName("uucs")]
+        public HttpResponseMessage GetUUCS(int id)
         {
             if (id < 2011)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Courses registered before 2011 are not available");
 
-            return Request.CreateResponse(webparser.GetCourses(Parser.Provider.UUCS, id));
+            return CoursesFromProvider(Parser.Provider.UUCS);
+        }
+
+        [ActionName("mongo")]
+        // GET api/values/5
+        public HttpResponseMessage GetMongo()
+        {
+            return CoursesFromProvider(Parser.Provider.LOCAL);
+        }
+
+        private HttpResponseMessage CoursesFromProvider(Parser.Provider provider,int id = 0)
+        {
+            var parsedLocal = webparser.GetCourses(provider, id);
+
+            return Request.CreateResponse(parsedLocal);
         }
 
         // POST api/values

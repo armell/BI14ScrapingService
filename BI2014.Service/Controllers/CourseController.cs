@@ -1,5 +1,6 @@
 ﻿using BI2014.Scrapping.Engine;
 using BI2014.Scrapping.Entities;
+using BI2014.Scrapping.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,13 @@ namespace BI2014.Service.Controllers
         [ActionName("uucs")]
         public HttpResponseMessage GetUUCS(int id)
         {
+            return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Scraping on CS UU has been deactivated, use mongo instead");
+
             if (id < 2011)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Courses registered before 2011 are not available");
 
-            return CoursesFromProvider(Parser.Provider.UUCS);
+
+            return CoursesFromProvider(Parser.Provider.UUCS,id);
         }
 
         [ActionName("mongo")]
@@ -33,6 +37,9 @@ namespace BI2014.Service.Controllers
         private HttpResponseMessage CoursesFromProvider(Parser.Provider provider,int id = 0)
         {
             var parsedLocal = webparser.GetCourses(provider, id);
+
+            //MongoService<Course> db = new MongoService<Course>();
+            //db.SaveCollection("courses", parsedLocal);
 
             return Request.CreateResponse(parsedLocal);
         }

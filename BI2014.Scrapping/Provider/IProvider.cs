@@ -13,5 +13,6 @@ namespace BI2014.Scrapping.Provider
         int Year { get; set; }
         ICollection<Course> Courses { get; set; }
         ICollection<Member> Members { get; set; }
+        ICollection<Member> Managers { get; set; }
     }
 }

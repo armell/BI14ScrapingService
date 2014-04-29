@@ -9,7 +9,7 @@ namespace BI2014.Scrapping.Engine
 {
     public class Parser
     {
-        public enum Provider {UUCS};
+        public enum Provider {UUCS,LOCAL};
         private Swagger _swagger = new Swagger();
 
         public ICollection<Entities.Course> GetCourses(Provider provider, int year = 2013)
@@ -21,6 +21,10 @@ namespace BI2014.Scrapping.Engine
                 case Provider.UUCS:
                     sourceProvider = new UUCSPRovider();
                     sourceProvider.URI = @"http://www.cs.uu.nl/education/rooster.php";
+                    sourceProvider.Year = year;
+                    break;
+                case Provider.LOCAL:
+                    sourceProvider = new LocalProvider();
                     sourceProvider.Year = year;
                     break;
             }

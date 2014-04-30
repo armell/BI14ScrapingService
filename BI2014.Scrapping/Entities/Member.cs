@@ -16,6 +16,7 @@ namespace BI2014.Scrapping.Entities
         public string FirstName { get; set; }
         public string Division { get; set; }
         public string Group { get; set; }
+        public int TotalCourses { get; set; }
         public string URI { get; set; }
     }
 }

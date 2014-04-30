@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,8 @@ namespace BI2014.Scrapping.Mongo
             _server = _client.GetServer();
             _database = _server.GetDatabase("MongoBI2014");
         }
+
+        public MongoDatabase Database { get { return _database; } }
 
         private  MongoCollection<T> GetCollection(string collectionName)
         {
@@ -39,6 +43,12 @@ namespace BI2014.Scrapping.Mongo
         public void RemoveAll(string collectionName)
         {
             GetCollection(collectionName).RemoveAll();
+        }
+
+        public void UpdateAllCourseMember()
+        {
+
+            
         }
     }
 }

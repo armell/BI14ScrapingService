@@ -1,4 +1,6 @@
 ﻿using BI2014.Scrapping.Engine;
+using BI2014.Scrapping.Entities;
+using BI2014.Scrapping.Mongo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,31 +13,21 @@ namespace BI2014.Service.Controllers
     public class StaffController : ApiController
     {
         Parser webparser = new Parser();
-        // GET: api/Staff
-        public HttpResponseMessage Get()
+
+        [ActionName("uucs")]
+        public HttpResponseMessage GetUUCS()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, webparser.GetMembers(Parser.Provider.UUCS));
+
+            return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Scraping has been deactivated, use mango instead");
+            //var result = webparser.GetMembers(Parser.Provider.UUCS);
+
+            //return Request.CreateResponse(HttpStatusCode.OK, webparser.GetMembers(Parser.Provider.UUCS));
         }
 
-        // GET: api/Staff/5
-        public string Get(int id)
+        [ActionName("mongo")]
+        public HttpResponseMessage GetMongo()
         {
-            return "value";
-        }
-
-        // POST: api/Staff
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Staff/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Staff/5
-        public void Delete(int id)
-        {
+            return Request.CreateResponse(HttpStatusCode.OK, webparser.GetMembers(Parser.Provider.LOCAL));
         }
     }
 }

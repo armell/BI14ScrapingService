@@ -18,13 +18,13 @@ namespace BI2014.Service.Controllers
         [ActionName("uucs")]
         public HttpResponseMessage GetUUCS(int id)
         {
-            //return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Scraping on CS UU has been deactivated, use mongo instead");
+            return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Scraping on CS UU has been deactivated, use mongo instead");
 
-            if (id < 2004)
+            /*if (id < 2004)
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Courses registered before 2004 are not available");
 
 
-            return CoursesFromProvider(Parser.Provider.UUCS,id);
+            return CoursesFromProvider(Parser.Provider.UUCS,id);*/
         }
 
         [ActionName("mongo")]

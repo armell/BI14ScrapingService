@@ -1,4 +1,5 @@
-﻿using BI2014.Scrapping.Provider;
+﻿using BI2014.Scrapping.Entities;
+using BI2014.Scrapping.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,30 @@ namespace BI2014.Scrapping.Engine
 
         public ICollection<Entities.Member> GetMembers(Provider provider)
         {
-            IProvider sourceProvider = new UUCSPRovider();
-            sourceProvider.URI = @"http://www.cs.uu.nl/staff/cur";
-            return sourceProvider.Members;
+            ICollection<Member> source = null;
+            switch(provider)
+            { 
+                case Provider.UUCS:
+                IProvider sourceProvider = new UUCSPRovider();
+                //sourceProvider.URI = @"http://www.cs.uu.nl/staff/cur";
+
+                sourceProvider.URI = @"http://www.cs.uu.nl/staff/old";
+
+                Mongo.MongoService<Member> db = new Mongo.MongoService<Member>();
+                source = sourceProvider.Members;
+                //db.SaveCollection("oldmembers", source);
+                break;
+                case Provider.LOCAL:
+                    sourceProvider = new LocalProvider();
+                    source = sourceProvider.Members;
+                break;
+            }
+            return source;
+        }
+
+        public ICollection<MemberCourse> GetCourseMembers(Provider provider)
+        {
+            return new LocalProvider().MemberCourses;
         }
     }
 }

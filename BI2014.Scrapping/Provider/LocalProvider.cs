@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BI2014.Scrapping.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,8 @@ namespace BI2014.Scrapping.Provider
         {
             get
             {
-                throw new NotImplementedException();
+                Mongo.MongoService<Entities.Member> db = new Mongo.MongoService<Entities.Member>();
+                return db.GetAll("members").Union(db.GetAll("oldmembers")).ToList();
             }
             set
             {
@@ -52,6 +54,21 @@ namespace BI2014.Scrapping.Provider
             get
             {
                 throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public ICollection<Entities.MemberCourse> MemberCourses
+        {
+            get
+            {
+                Mongo.MongoService<MemberCourse> db = new Mongo.MongoService<MemberCourse>();
+
+                return db.GetAll("membercourses").Union(db.GetAll("oldmembercourses")).ToList();
             }
             set
             {

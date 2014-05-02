@@ -14,5 +14,6 @@ namespace BI2014.Scrapping.Entities
         public ObjectId Id { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
+        public string MemberURI { get; set; }
     }
 }

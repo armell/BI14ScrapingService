@@ -15,5 +15,6 @@ namespace BI2014.Scrapping.Provider
         ICollection<Member> Members { get; set; }
         ICollection<Member> Managers { get; set; }
         ICollection<MemberCourse> MemberCourses { get; set; }
+        ICollection<Publication> Publications { get; set; }
     }
 }

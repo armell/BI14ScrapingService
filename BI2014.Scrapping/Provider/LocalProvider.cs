@@ -75,5 +75,18 @@ namespace BI2014.Scrapping.Provider
                 throw new NotImplementedException();
             }
         }
+
+
+        public ICollection<Publication> Publications
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

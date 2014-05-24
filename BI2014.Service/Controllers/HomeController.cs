@@ -14,5 +14,10 @@ namespace BI2014.Service.Controllers
 
             return View();
         }
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
     }
 }

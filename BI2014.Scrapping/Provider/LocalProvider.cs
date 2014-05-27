@@ -88,5 +88,19 @@ namespace BI2014.Scrapping.Provider
                 throw new NotImplementedException();
             }
         }
+
+
+        public ICollection<ContactCourse> ContactHours
+        {
+            get
+            {
+                Mongo.MongoService<Entities.ContactCourse> db = new Mongo.MongoService<Entities.ContactCourse>();
+                return db.GetAll("contacthours").ToList();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

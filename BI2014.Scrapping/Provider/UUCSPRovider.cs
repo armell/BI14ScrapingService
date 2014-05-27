@@ -1,4 +1,5 @@
 ﻿using BI2014.Scrapping.Entities;
+using ExpressionEvaluator;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace BI2014.Scrapping.Provider
         private ICollection<Entities.Course> _courses = new List<Entities.Course>();
         private ICollection<Entities.Member> _members = new List<Entities.Member>();
         private ICollection<Entities.Publication> _publications = new List<Entities.Publication>();
+        private ICollection<Entities.ContactCourse> _contacts = new List<Entities.ContactCourse>();
 
         public int Year { get; set; }
         public string URI { get; set; }
@@ -43,6 +45,48 @@ namespace BI2014.Scrapping.Provider
                 payload["jaar"] = Year.ToString();
 
                 return Encoding.Default.GetString(client.UploadValues(URI,"POST", payload));
+            }
+        }
+
+        private string GetPartialTimetable(IEnumerable<Course> subcourses, string year)
+        {
+            if (subcourses.Count() > 4)
+                throw new ArgumentOutOfRangeException("you fooooool");
+
+            using (WebClient client = new WebClient())
+            {
+                /*
+                 * vak1:INFONW
+                    groep1:
+                    vak2:INFOAFP
+                    groep2:
+                    vak3:
+                    groep3:
+                    vak4:
+                    groep4:
+                    soort:rooster
+                    stjaar:1
+                    jaar:2013
+                    periode:1
+                    sr:0
+                    opl:ica
+                    stijl:1
+                 * */
+                var payload = new NameValueCollection();
+                payload["jaar"] = year;
+                payload["soort"] = "rooster";
+                payload["sr"] = "0";
+                //payload["periode"] = "1";
+                payload["opl"] = "ica";
+
+                short i = 0;
+                foreach (var c in subcourses)
+                {
+                    payload.Add("vak" + (++i), c.Code);
+                    payload.Add("groep" + i,"");
+                }
+
+                return Encoding.Default.GetString(client.UploadValues(@"http://www.cs.uu.nl/education/rooster.php", "POST", payload));
             }
         }
 
@@ -97,11 +141,6 @@ namespace BI2014.Scrapping.Provider
         private Member LoadMemberProfile(string uri)
         {
             return CreateMemberFromSource(uri);
-        }
-
-        private async Task<Member> LoadMemberProfileAsync(string uri)
-        {
-            return null;
         }
 
         private Member CreateMemberFromSource(string uri)
@@ -275,7 +314,6 @@ namespace BI2014.Scrapping.Provider
             }
         }
 
-
         public ICollection<Member> Managers
         {
             get
@@ -288,12 +326,72 @@ namespace BI2014.Scrapping.Provider
             }
         }
 
-
         public ICollection<MemberCourse> MemberCourses
         {
             get
             {
                 throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        private void LoadContactHours(int year = 2013) 
+        {
+            var courses = new LocalProvider().Courses.OrderBy(p => p.Year).ThenBy(p => p.Periode).Where(p => p.Year == "2013"); //no 2009 - 2012
+
+            //short start = 0;
+            //short end = 3;
+
+            var result = courses;
+
+            using (WebClient client = new WebClient())
+            {
+                
+                foreach (var item in result)
+                {
+                    string request = client.DownloadString(item.URI);
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(request);
+
+                    //$x("//table[contains(@border,'1')]")
+
+                    var query = doc.DocumentNode.SelectSingleNode("//table[contains(@border,'1')]");
+
+                    if(query != null)
+                    {
+                        ContactCourse contact = new ContactCourse();
+                        var rmatches = Regex.Matches(query.InnerText.Replace(" ", ""), "[a-z]{2}(([0-9]{2}(\\.[0-9]{2})?)-[0-9]{2}(\\.[0-9]{2})?)");
+
+                        if (rmatches != null && rmatches.Count > 1)
+                        {
+                            var totalHours = rmatches.Cast<Match>().GroupBy(g => g.Value)
+                                             .Select(s => Convert.ToDecimal(new CompiledExpression(s.First().Groups[1].Value).Eval()));
+
+
+                            contact.URI = item.URI;
+                            contact.Contact = (totalHours.Cast<decimal>().Sum() * -1).ToString();
+                            contact.Extracted = String.Concat((from Match m in rmatches select m.Value));
+
+                            _contacts.Add(contact);
+                        }
+                    }
+                }
+            }
+
+            Mongo.MongoService<ContactCourse> service = new Mongo.MongoService<ContactCourse>();
+            service.SaveCollection("contacthours", _contacts);
+        }
+
+        public ICollection<ContactCourse> ContactHours
+        {
+            get
+            {
+                LoadContactHours();
+                return _contacts;
             }
             set
             {

@@ -18,10 +18,10 @@ namespace BI2014.Service.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _parser.GetContact(Parser.Provider.LOCAL));
         }
 
-        [ActionName("uucs")]
-        public HttpResponseMessage GetUUCS()
+        //[ActionName("uucs")]
+        /*public HttpResponseMessage GetUUCS()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _parser.GetContact(Parser.Provider.UUCS));
-        }
+        }*/
     }
 }

@@ -55,6 +55,28 @@ namespace BI2014.Scrapping.Engine
             return source;
         }
 
+        public ICollection<Entities.ContactCourse> GetContact(Provider provider)
+        {
+            ICollection<ContactCourse> source = null;
+            switch (provider)
+            {
+                case Provider.UUCS:
+                    IProvider sourceProvider = new UUCSPRovider();
+
+                    sourceProvider.URI = @"http://www.cs.uu.nl/education/rooster.php";
+
+                    source = sourceProvider.ContactHours;
+                    //db.SaveCollection("oldmembers", source);
+                    break;
+                case Provider.LOCAL:
+                    sourceProvider = new LocalProvider();
+                    source = sourceProvider.ContactHours;
+                    break;
+            }
+
+            return source;
+        }
+
         public ICollection<MemberCourse> GetCourseMembers(Provider provider)
         {
             return new LocalProvider().MemberCourses;

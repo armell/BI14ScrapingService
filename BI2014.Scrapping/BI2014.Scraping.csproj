@@ -66,6 +66,7 @@
     <Compile Include="Entities\Member.cs" />
     <Compile Include="Entities\MemberCourse.cs" />
     <Compile Include="Entities\Publication.cs" />
+    <Compile Include="Entities\StudentDrop.cs" />
     <Compile Include="Mongo\MongoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\IProvider.cs" />

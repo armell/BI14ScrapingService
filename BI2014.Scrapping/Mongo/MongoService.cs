@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using BI2014.Scrapping.Properties;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
@@ -16,7 +17,7 @@ namespace BI2014.Scrapping.Mongo
         private MongoDatabase _database;
         public MongoService()
         {
-            _client = new MongoClient(@"mongodb://MongoBI2014:pUcCzGZVbdKhMagxtRPljOYUp_2A1F81XhuxwVIbhn4-@ds027748.mongolab.com:27748/MongoBI2014");
+            _client = new MongoClient(Settings.Default.MongoDB);
             _server = _client.GetServer();
             _database = _server.GetDatabase("MongoBI2014");
         }

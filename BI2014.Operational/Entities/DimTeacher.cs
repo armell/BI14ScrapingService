@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BI2014.Operational.Entities
 {
-    public class DropOut
+    public class DimTeacher
     {
-        public string Year { get; set; }
+        public int Id { get; set; }
+        public string FullName { get; set; }
+        public string Division { get; set; }
     }
 }
